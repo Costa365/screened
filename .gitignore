@@ -20,6 +20,7 @@ venv/
 
 # Database
 data/*.db
+*.db
 
 # OS
 .DS_Store
