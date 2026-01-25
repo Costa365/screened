@@ -1,0 +1,14 @@
+services:
+  screened:
+    build: .
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - AUTH_USERNAME=${AUTH_USERNAME:-admin}
+      - AUTH_PASSWORD=${AUTH_PASSWORD:-changeme}
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-change-in-production}
+      - DATABASE_URL=sqlite:///./data/screened.db
+    restart: unless-stopped

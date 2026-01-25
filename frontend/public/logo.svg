@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Film reel outer circle -->
+  <circle cx="32" cy="32" r="28" stroke="#d946ef" stroke-width="3" fill="#1f2937"/>
+
+  <!-- Center hole -->
+  <circle cx="32" cy="32" r="6" fill="#d946ef"/>
+
+  <!-- Film sprocket holes -->
+  <circle cx="32" cy="14" r="4" fill="#d946ef"/>
+  <circle cx="32" cy="50" r="4" fill="#d946ef"/>
+  <circle cx="14" cy="32" r="4" fill="#d946ef"/>
+  <circle cx="50" cy="32" r="4" fill="#d946ef"/>
+
+  <!-- Diagonal sprocket holes -->
+  <circle cx="19.3" cy="19.3" r="3" fill="#d946ef"/>
+  <circle cx="44.7" cy="19.3" r="3" fill="#d946ef"/>
+  <circle cx="19.3" cy="44.7" r="3" fill="#d946ef"/>
+  <circle cx="44.7" cy="44.7" r="3" fill="#d946ef"/>
+</svg>
