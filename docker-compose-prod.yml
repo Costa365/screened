@@ -1,0 +1,24 @@
+services:
+  screened:
+    build: .
+    ports:
+      - "8082:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - AUTH_USERNAME=${AUTH_USERNAME}
+      - AUTH_PASSWORD=${AUTH_PASSWORD}
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=sqlite:///./data/screened.db
+      - VIRTUAL_HOST=screened.costa365.site
+      - PORT=8082
+    networks:
+      - default
+    restart: unless-stopped
+
+
+networks:
+  default:
+    external: true
+    name: nginx-proxy
