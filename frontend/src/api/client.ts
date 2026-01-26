@@ -32,7 +32,13 @@ export const api = {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: formData,
     });
-    return handleResponse(response);
+
+    // Handle login response separately to show error messages instead of redirecting
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ detail: 'An error occurred' }));
+      throw new Error(error.detail || 'Invalid username or password');
+    }
+    return response.json();
   },
 
   async getMe(): Promise<{ username: string }> {
