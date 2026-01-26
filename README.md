@@ -1,5 +1,7 @@
 # Screened
 
+[![Tests](https://github.com/<owner>/<repo>/actions/workflows/tests.yml/badge.svg)](https://github.com/<owner>/<repo>/actions/workflows/tests.yml)
+
 A personal movie logging web app with TMDB integration. Track the movies you've watched with automatic poster and metadata fetching.
 
 ## Features
