@@ -10,6 +10,7 @@ export function LoginPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (isLoading) return; // Prevent double submission
     setError(null);
     setIsLoading(true);
 

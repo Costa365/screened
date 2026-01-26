@@ -8,7 +8,6 @@ function getAuthHeaders(): HeadersInit {
 async function handleResponse<T>(response: Response): Promise<T> {
   if (response.status === 401) {
     localStorage.removeItem('token');
-    window.location.href = '/login';
     throw new Error('Unauthorized');
   }
   if (!response.ok) {
