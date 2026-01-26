@@ -25,7 +25,7 @@ export function useMovies() {
 
   const addMovie = async (movie: MovieCreate) => {
     const newMovie = await api.createMovie(movie);
-    setMovies(prev => [...prev, newMovie]);
+    setMovies(prev => [newMovie, ...prev]);
     return newMovie;
   };
 
