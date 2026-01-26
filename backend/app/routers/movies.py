@@ -17,7 +17,7 @@ def list_movies(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    movies = db.query(MovieModel).order_by(MovieModel.position).all()
+    movies = db.query(MovieModel).order_by(MovieModel.added_at.desc()).all()
     return movies
 
 
