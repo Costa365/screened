@@ -26,7 +26,7 @@ RUN mkdir -p /app/data
 
 # Set environment
 ENV PYTHONPATH=/app/backend
-ENV DATABASE_URL=sqlite:///./data/screened.db
+ENV DATABASE_URL=sqlite:////app/data/screened.db
 
 EXPOSE 8000
 

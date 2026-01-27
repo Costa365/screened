@@ -10,5 +10,5 @@ services:
       - AUTH_PASSWORD=${AUTH_PASSWORD}
       - TMDB_API_KEY=${TMDB_API_KEY}
       - SECRET_KEY=${SECRET_KEY}
-      - DATABASE_URL=sqlite:///./data/screened.db
+      - DATABASE_URL=sqlite:////app/data/screened.db
     restart: unless-stopped
