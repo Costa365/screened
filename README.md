@@ -113,34 +113,6 @@ Inception,2010
 Parasite,2019
 ```
 
-## Project Structure
-
-```
-screened/
-├── backend/
-│   ├── app/
-│   │   ├── main.py           # FastAPI entry point
-│   │   ├── config.py         # Environment settings
-│   │   ├── database.py       # SQLite setup
-│   │   ├── models/           # SQLAlchemy models
-│   │   ├── schemas/          # Pydantic schemas
-│   │   ├── routers/          # API endpoints
-│   │   └── services/         # Business logic
-│   └── tests/                # Pytest tests
-├── frontend/
-│   ├── src/
-│   │   ├── api/              # API client
-│   │   ├── components/       # React components
-│   │   ├── context/          # Auth context
-│   │   ├── hooks/            # Custom hooks
-│   │   └── pages/            # Page components
-│   └── public/               # Static assets
-├── data/                     # SQLite database (docker volume)
-├── Dockerfile
-├── docker-compose.yml
-└── .github/workflows/        # CI pipeline
-```
-
 ## License
 
 MIT
