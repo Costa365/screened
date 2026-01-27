@@ -1,6 +1,6 @@
 import csv
 import io
-from typing import List
+
 from pydantic import BaseModel
 
 
@@ -9,7 +9,7 @@ class CSVMovieRow(BaseModel):
     year: int
 
 
-def parse_csv(content: str) -> List[CSVMovieRow]:
+def parse_csv(content: str) -> list[CSVMovieRow]:
     """Parse CSV content and return list of movie rows.
 
     Expected CSV format:

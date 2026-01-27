@@ -1,18 +1,18 @@
+
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
 from sqlalchemy import func
-from typing import List
+from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.movie import Movie as MovieModel
-from app.schemas.movie import Movie, MovieCreate, MovieUpdate
 from app.routers.auth import get_current_user
 from app.schemas.auth import User
+from app.schemas.movie import Movie, MovieCreate, MovieUpdate
 
 router = APIRouter(prefix="/api/movies", tags=["movies"])
 
 
-@router.get("", response_model=List[Movie])
+@router.get("", response_model=list[Movie])
 def list_movies(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)

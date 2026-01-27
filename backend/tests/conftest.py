@@ -4,10 +4,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.main import app
+from app.config import Settings, get_settings
 from app.database import Base, get_db
-from app.config import get_settings, Settings
-
+from app.main import app
 
 # Test database setup
 SQLALCHEMY_DATABASE_URL = "sqlite://"

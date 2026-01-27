@@ -1,6 +1,7 @@
 # Screened
 
 [![Tests](https://github.com/costa365/screened/actions/workflows/tests.yml/badge.svg)](https://github.com/costa365/screened/actions/workflows/tests.yml)
+[![Lint](https://github.com/costa365/screened/actions/workflows/lint.yml/badge.svg)](https://github.com/costa365/screened/actions/workflows/lint.yml)
 
 A personal movie logging web app with TMDB integration. Track the movies you've watched with automatic poster and metadata fetching.
 
@@ -88,6 +89,16 @@ The frontend dev server proxies API requests to `localhost:8000`.
 ```bash
 cd backend
 pytest -v
+```
+
+### Running Linters
+
+```bash
+# Backend (Python/Ruff)
+docker run --rm -v $(pwd)/backend:/app -w /app ghcr.io/astral-sh/ruff:0.4.4 check .
+
+# Frontend (TypeScript/ESLint)
+docker run --rm -v $(pwd)/frontend:/app -w /app node:20-slim bash -c "npm install --silent && npm run lint"
 ```
 
 ## API Endpoints

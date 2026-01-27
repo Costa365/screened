@@ -1,14 +1,15 @@
+
 import httpx
-from typing import Optional, List
+
 from app.config import get_settings
-from app.schemas.tmdb import TMDBMovieResult, TMDBSearchResponse, TMDBMovieDetails
+from app.schemas.tmdb import TMDBMovieDetails, TMDBMovieResult, TMDBSearchResponse
 
 settings = get_settings()
 
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
 
-async def search_movies(query: str, year: Optional[int] = None) -> TMDBSearchResponse:
+async def search_movies(query: str, year: int | None = None) -> TMDBSearchResponse:
     async with httpx.AsyncClient() as client:
         params = {
             "api_key": settings.tmdb_api_key,

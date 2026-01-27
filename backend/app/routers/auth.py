@@ -1,18 +1,18 @@
+from datetime import datetime, timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-from datetime import datetime, timedelta
-from typing import Optional
 
-from app.config import get_settings, Settings
-from app.schemas.auth import Token, User, LoginRequest
+from app.config import Settings, get_settings
+from app.schemas.auth import LoginRequest, Token, User
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 
-def create_access_token(data: dict, settings: Settings, expires_delta: Optional[timedelta] = None) -> str:
+def create_access_token(data: dict, settings: Settings, expires_delta: timedelta | None = None) -> str:
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -42,7 +42,7 @@ async def get_current_user(
         if username is None:
             raise credentials_exception
     except JWTError:
-        raise credentials_exception
+        raise credentials_exception from None
 
     if username != settings.auth_username:
         raise credentials_exception

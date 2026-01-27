@@ -1,25 +1,25 @@
+
 from pydantic import BaseModel
-from typing import Optional, List
 
 
 class TMDBMovieResult(BaseModel):
     id: int
     title: str
-    release_date: Optional[str] = None
-    poster_path: Optional[str] = None
-    overview: Optional[str] = None
+    release_date: str | None = None
+    poster_path: str | None = None
+    overview: str | None = None
 
 
 class TMDBSearchResponse(BaseModel):
-    results: List[TMDBMovieResult]
+    results: list[TMDBMovieResult]
     total_results: int
 
 
 class TMDBMovieDetails(BaseModel):
     id: int
     title: str
-    release_date: Optional[str] = None
-    poster_path: Optional[str] = None
-    overview: Optional[str] = None
-    runtime: Optional[int] = None
-    vote_average: Optional[float] = None
+    release_date: str | None = None
+    poster_path: str | None = None
+    overview: str | None = None
+    runtime: int | None = None
+    vote_average: float | None = None

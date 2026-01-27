@@ -1,11 +1,12 @@
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from pathlib import Path
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
 from app.database import init_db
-from app.routers import auth, movies, tmdb, import_csv
+from app.routers import auth, import_csv, movies, tmdb
 
 app = FastAPI(title="Screened API", version="1.0.0")
 

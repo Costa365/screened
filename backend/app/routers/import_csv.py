@@ -1,15 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
-from sqlalchemy.orm import Session
-from sqlalchemy import func
-from typing import List
+
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from pydantic import BaseModel
+from sqlalchemy import func
+from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.movie import Movie as MovieModel
-from app.services.csv_import import parse_csv, CSVMovieRow
-from app.services.tmdb import search_movies
 from app.routers.auth import get_current_user
 from app.schemas.auth import User
+from app.services.csv_import import parse_csv
+from app.services.tmdb import search_movies
 
 router = APIRouter(prefix="/api/import", tags=["import"])
 
@@ -17,7 +17,7 @@ router = APIRouter(prefix="/api/import", tags=["import"])
 class ImportResult(BaseModel):
     imported: int
     skipped: int
-    errors: List[str]
+    errors: list[str]
 
 
 @router.post("/csv", response_model=ImportResult)
