@@ -55,12 +55,18 @@ export function AddMovieForm({ onAdd }: AddMovieFormProps) {
 
   return (
     <div className="bg-gray-800 rounded-lg p-4">
+      <h2 className="text-sm font-medium text-gray-400 mb-3 flex items-center gap-1.5">
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+        </svg>
+        Log a movie
+      </h2>
       <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
         <input
           type="text"
           value={title}
           onChange={e => setTitle(e.target.value)}
-          placeholder="Movie title"
+          placeholder="Search for a movie you watched..."
           className="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
         />
         <input
