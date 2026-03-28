@@ -40,7 +40,21 @@ export const api = {
     return response.json();
   },
 
-  async getMe(): Promise<{ username: string }> {
+  async register(email: string, password: string): Promise<{ access_token: string; token_type: string }> {
+    const response = await fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ detail: 'Registration failed' }));
+      throw new Error(error.detail || 'Registration failed');
+    }
+    return response.json();
+  },
+
+  async getMe(): Promise<{ id: number; email: string }> {
     const response = await fetch(`${API_BASE}/auth/me`, {
       headers: getAuthHeaders(),
     });

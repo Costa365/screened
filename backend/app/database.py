@@ -30,4 +30,6 @@ def get_db():
 
 def init_db():
     from app.models.movie import Movie  # noqa: F401
+    from app.models.user import User  # noqa: F401
+
     Base.metadata.create_all(bind=engine)

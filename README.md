@@ -12,7 +12,7 @@ A personal movie logging web app with TMDB integration. Track the movies you've 
 - **CSV Import**: Bulk import movies from a CSV file
 - **Edit Support**: Correct TMDB matches by updating the TMDB ID
 - **Dark Theme**: Modern dark UI built with TailwindCSS
-- **Single User**: Simple JWT auth with credentials from environment variables
+- **User Accounts**: Register with email and password, per-user movie lists
 
 ## Tech Stack
 
@@ -43,8 +43,6 @@ A personal movie logging web app with TMDB integration. Track the movies you've 
 
 3. Edit `.env` with your settings:
    ```
-   AUTH_USERNAME=admin
-   AUTH_PASSWORD=your-secure-password
    TMDB_API_KEY=your-tmdb-api-key
    SECRET_KEY=your-random-secret-key
    ```
@@ -54,7 +52,7 @@ A personal movie logging web app with TMDB integration. Track the movies you've 
    docker compose up -d
    ```
 
-5. Open http://localhost:8080 and login with your credentials.
+5. Open http://localhost:8080 and register an account.
 
 ### Stopping
 
@@ -105,9 +103,10 @@ docker run --rm -v $(pwd)/frontend:/app -w /app node:20-slim bash -c "npm instal
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| POST | `/api/auth/register` | Register a new account |
 | POST | `/api/auth/login` | Login, returns JWT |
 | GET | `/api/auth/me` | Get current user |
-| GET | `/api/movies` | List all movies |
+| GET | `/api/movies` | List user's movies |
 | POST | `/api/movies` | Add a movie |
 | PATCH | `/api/movies/{id}` | Update a movie |
 | DELETE | `/api/movies/{id}` | Delete a movie |

@@ -4,8 +4,6 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    auth_username: str = "admin"
-    auth_password: str = "changeme"
     tmdb_api_key: str = ""
     secret_key: str = "dev-secret-key-change-in-production"
     database_url: str = "sqlite:///./data/screened.db"

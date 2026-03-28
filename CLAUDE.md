@@ -13,12 +13,13 @@ Screened is a personal movie logging web application. Users can track movies the
 - **Entry point**: `backend/app/main.py`
 - **Framework**: FastAPI with SQLAlchemy ORM
 - **Database**: SQLite stored in `data/screened.db`
-- **Auth**: JWT tokens with credentials from environment variables
+- **Auth**: JWT tokens with bcrypt-hashed passwords, DB-backed user accounts
 
 Key files:
 - `app/config.py` - Settings loaded from environment
 - `app/database.py` - SQLAlchemy engine and session setup
-- `app/models/movie.py` - Movie SQLAlchemy model
+- `app/models/user.py` - User SQLAlchemy model (email, password_hash)
+- `app/models/movie.py` - Movie SQLAlchemy model (scoped to user via user_id FK)
 - `app/routers/` - API endpoint handlers
 - `app/services/tmdb.py` - TMDB API client
 - `app/services/csv_import.py` - CSV parsing logic
@@ -68,8 +69,6 @@ cd backend && pytest -v
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `AUTH_USERNAME` | Login username | `admin` |
-| `AUTH_PASSWORD` | Login password | `changeme` |
 | `TMDB_API_KEY` | TMDB API key | (required for search) |
 | `SECRET_KEY` | JWT signing key | dev default |
 | `DATABASE_URL` | SQLite path | `sqlite:///./data/screened.db` |

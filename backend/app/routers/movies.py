@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.movie import Movie as MovieModel
+from app.models.user import User as UserModel
 from app.routers.auth import get_current_user
-from app.schemas.auth import User
 from app.schemas.movie import Movie, MovieCreate, MovieUpdate
 
 router = APIRouter(prefix="/api/movies", tags=["movies"])
@@ -15,9 +15,11 @@ router = APIRouter(prefix="/api/movies", tags=["movies"])
 @router.get("", response_model=list[Movie])
 def list_movies(
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: UserModel = Depends(get_current_user)
 ):
-    movies = db.query(MovieModel).order_by(MovieModel.added_at.desc()).all()
+    movies = db.query(MovieModel).filter(
+        MovieModel.user_id == current_user.id
+    ).order_by(MovieModel.added_at.desc()).all()
     return movies
 
 
@@ -25,10 +27,12 @@ def list_movies(
 def create_movie(
     movie: MovieCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: UserModel = Depends(get_current_user)
 ):
-    # Get the next position
-    max_position = db.query(func.max(MovieModel.position)).scalar()
+    # Get the next position for this user
+    max_position = db.query(func.max(MovieModel.position)).filter(
+        MovieModel.user_id == current_user.id
+    ).scalar()
     next_position = (max_position or 0) + 1
 
     db_movie = MovieModel(
@@ -36,7 +40,8 @@ def create_movie(
         year=movie.year,
         tmdb_id=movie.tmdb_id,
         poster_path=movie.poster_path,
-        position=next_position
+        position=next_position,
+        user_id=current_user.id,
     )
     db.add(db_movie)
     db.commit()
@@ -49,9 +54,12 @@ def update_movie(
     movie_id: int,
     movie_update: MovieUpdate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: UserModel = Depends(get_current_user)
 ):
-    db_movie = db.query(MovieModel).filter(MovieModel.id == movie_id).first()
+    db_movie = db.query(MovieModel).filter(
+        MovieModel.id == movie_id,
+        MovieModel.user_id == current_user.id,
+    ).first()
     if not db_movie:
         raise HTTPException(status_code=404, detail="Movie not found")
 
@@ -68,9 +76,12 @@ def update_movie(
 def delete_movie(
     movie_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: UserModel = Depends(get_current_user)
 ):
-    db_movie = db.query(MovieModel).filter(MovieModel.id == movie_id).first()
+    db_movie = db.query(MovieModel).filter(
+        MovieModel.id == movie_id,
+        MovieModel.user_id == current_user.id,
+    ).first()
     if not db_movie:
         raise HTTPException(status_code=404, detail="Movie not found")
 
