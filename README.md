@@ -10,6 +10,7 @@ A personal movie logging web app with TMDB integration. Track the movies you've 
 - **Movie Logging**: Add movies by title and year, automatically matched with TMDB
 - **TMDB Integration**: Posters, metadata, and links to TMDB pages
 - **CSV Import**: Bulk import movies from a CSV file
+- **View Modes**: Large icons, small icons, and table views
 - **Edit Support**: Correct TMDB matches by updating the TMDB ID
 - **Dark Theme**: Modern dark UI built with TailwindCSS
 - **User Accounts**: Register with email and password, per-user movie lists

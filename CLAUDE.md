@@ -35,7 +35,7 @@ Key files:
 - `src/api/client.ts` - API client with types
 - `src/context/AuthContext.tsx` - Authentication state
 - `src/hooks/useMovies.ts` - Movie data hook
-- `src/components/movies/` - Movie-related components
+- `src/components/movies/` - Movie-related components (MovieGrid, MovieSmallGrid, MovieTable, MovieCard, etc.)
 - `src/pages/` - Page components
 
 ## Common Tasks
