@@ -68,7 +68,7 @@ export function AddMovieForm({ onAdd }: AddMovieFormProps) {
           value={year}
           onChange={e => setYear(e.target.value)}
           placeholder="Year (optional)"
-          className="w-full sm:w-32 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="w-full sm:w-[138px] px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
         />
         <button
           type="submit"
