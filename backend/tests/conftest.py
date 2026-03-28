@@ -1,6 +1,6 @@
+import bcrypt
 import pytest
 from fastapi.testclient import TestClient
-import bcrypt
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
