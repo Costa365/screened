@@ -4,7 +4,7 @@ This file provides context for Claude Code when working on this project.
 
 ## Project Overview
 
-Screened is a personal movie logging web application. Users can track movies they've watched, with automatic metadata and poster fetching from TMDB (The Movie Database).
+Screened is a personal movie logging web application. Users can track movies they've watched, search their collection, and browse in multiple view modes, with automatic metadata and poster fetching from TMDB (The Movie Database).
 
 ## Architecture
 
@@ -37,6 +37,7 @@ Key files:
 - `src/hooks/useMovies.ts` - Movie data hook
 - `src/components/movies/` - Movie-related components (MovieGrid, MovieSmallGrid, MovieTable, MovieCard, etc.)
 - `src/pages/` - Page components
+- `src/pages/MoviesPage.tsx` - Main movies page with client-side search filtering and view mode switching
 
 ## Common Tasks
 

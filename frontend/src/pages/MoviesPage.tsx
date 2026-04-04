@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Layout } from '../components/layout/Layout';
 import { MovieGrid } from '../components/movies/MovieGrid';
 import { MovieSmallGrid } from '../components/movies/MovieSmallGrid';
@@ -13,6 +13,7 @@ type ViewMode = 'grid' | 'small' | 'table';
 export function MoviesPage() {
   const { movies, isLoading, error, addMovie, updateMovie, deleteMovie } = useMovies();
   const [editingMovie, setEditingMovie] = useState<Movie | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
     return (localStorage.getItem('viewMode') as ViewMode) || 'grid';
   });
@@ -22,15 +23,33 @@ export function MoviesPage() {
     localStorage.setItem('viewMode', mode);
   };
 
+  const filteredMovies = useMemo(() => {
+    if (!searchQuery.trim()) return movies;
+    const q = searchQuery.toLowerCase();
+    return movies.filter(m => m.title.toLowerCase().includes(q));
+  }, [movies, searchQuery]);
+
   const viewButtonClass = (mode: ViewMode) =>
     `p-1.5 rounded ${viewMode === mode ? 'bg-gray-700 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-700/50'}`;
 
   return (
     <Layout>
       <div className="space-y-8">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white">My Movies</h1>
+        <div className="flex justify-between items-center gap-4">
+          <h1 className="text-2xl font-bold text-white shrink-0">My Movies</h1>
           <div className="flex items-center gap-3">
+            <div className="relative">
+              <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search movies..."
+                className="w-48 pl-8 pr-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+              />
+            </div>
             <div className="flex items-center gap-1 bg-gray-800 rounded-lg p-1">
               <button
                 onClick={() => setView('grid')}
@@ -60,7 +79,7 @@ export function MoviesPage() {
                 </svg>
               </button>
             </div>
-            <span className="text-gray-400">{movies.length} movies</span>
+            <span className="text-gray-400 shrink-0">{searchQuery ? `${filteredMovies.length} / ` : ''}{movies.length} movies</span>
           </div>
         </div>
 
@@ -80,21 +99,25 @@ export function MoviesPage() {
           <div className="text-center py-12 text-gray-400">
             <p>No movies yet. Add your first movie above!</p>
           </div>
+        ) : filteredMovies.length === 0 ? (
+          <div className="text-center py-12 text-gray-400">
+            <p>No movies matching "{searchQuery}"</p>
+          </div>
         ) : viewMode === 'grid' ? (
           <MovieGrid
-            movies={movies}
+            movies={filteredMovies}
             onEdit={setEditingMovie}
             onDelete={deleteMovie}
           />
         ) : viewMode === 'small' ? (
           <MovieSmallGrid
-            movies={movies}
+            movies={filteredMovies}
             onEdit={setEditingMovie}
             onDelete={deleteMovie}
           />
         ) : (
           <MovieTable
-            movies={movies}
+            movies={filteredMovies}
             onEdit={setEditingMovie}
             onDelete={deleteMovie}
           />

@@ -3,7 +3,7 @@
 [![Tests](https://github.com/costa365/screened/actions/workflows/tests.yml/badge.svg)](https://github.com/costa365/screened/actions/workflows/tests.yml)
 [![Lint](https://github.com/costa365/screened/actions/workflows/lint.yml/badge.svg)](https://github.com/costa365/screened/actions/workflows/lint.yml)
 
-A personal movie logging web app with TMDB integration. Track the movies you've watched with automatic poster and metadata fetching.
+A personal movie logging web app with TMDB integration. Track the movies you've watched with automatic poster and metadata fetching. It's available at [screened.costa365.site](https://screened.costa365.site).
 
 ## Features
 
