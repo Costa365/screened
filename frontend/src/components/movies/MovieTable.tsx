@@ -6,7 +6,7 @@ interface MovieTableProps {
   onDelete: (id: number) => void;
 }
 
-const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w92';
+const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w154';
 
 export function MovieTable({ movies, onEdit, onDelete }: MovieTableProps) {
   return (
@@ -14,7 +14,7 @@ export function MovieTable({ movies, onEdit, onDelete }: MovieTableProps) {
       <table className="w-full">
         <thead>
           <tr className="border-b border-gray-700 text-left text-sm text-gray-400">
-            <th className="px-4 py-3 font-medium w-12"></th>
+            <th className="px-4 py-3 font-medium w-20"></th>
             <th className="px-4 py-3 font-medium">Title</th>
             <th className="px-4 py-3 font-medium w-20">Year</th>
             <th className="px-4 py-3 font-medium w-24 text-right">Actions</th>
@@ -23,7 +23,7 @@ export function MovieTable({ movies, onEdit, onDelete }: MovieTableProps) {
         <tbody>
           {movies.map(movie => (
             <tr key={movie.id} className="border-b border-gray-700/50 hover:bg-gray-700/30">
-              <td className="px-4 py-2">
+              <td className="px-4 py-1">
                 <a
                   href={`https://www.themoviedb.org/movie/${movie.tmdb_id}`}
                   target="_blank"
@@ -33,10 +33,10 @@ export function MovieTable({ movies, onEdit, onDelete }: MovieTableProps) {
                     <img
                       src={`${TMDB_IMAGE_BASE}${movie.poster_path}`}
                       alt=""
-                      className="w-8 h-12 object-cover rounded"
+                      className="w-16 h-24 object-contain rounded"
                     />
                   ) : (
-                    <div className="w-8 h-12 bg-gray-700 rounded flex items-center justify-center">
+                    <div className="w-16 h-24 bg-gray-700 rounded flex items-center justify-center">
                       <span className="text-gray-500 text-xs">?</span>
                     </div>
                   )}
