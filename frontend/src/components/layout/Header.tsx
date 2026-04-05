@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../api/client';
+import { exportMoviesCsv } from '../../utils/exportCsv';
 
 export function Header() {
   const { email, logout } = useAuth();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleExport = async () => {
+    const movies = await api.getMovies();
+    exportMoviesCsv(movies);
+  };
 
   const navLinkClass = (path: string) =>
     `px-3 py-2 rounded-md text-sm font-medium ${
@@ -28,6 +35,7 @@ export function Header() {
             <nav className="flex space-x-4">
               <Link to="/" className={navLinkClass('/')}>Movies</Link>
               <Link to="/import" className={navLinkClass('/import')}>Import</Link>
+              <button onClick={handleExport} className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Export</button>
             </nav>
             <div className="flex items-center space-x-4">
               <span className="text-gray-400 text-sm flex items-center gap-1.5">
@@ -70,6 +78,9 @@ export function Header() {
             <Link to="/import" className={`block ${navLinkClass('/import')}`} onClick={() => setMenuOpen(false)}>
               Import
             </Link>
+            <button onClick={() => { handleExport(); setMenuOpen(false); }} className={`block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white`}>
+              Export
+            </button>
             <div className="border-t border-gray-700 mt-2 pt-2 px-3 flex items-center justify-between">
               <span className="text-gray-400 text-sm truncate flex items-center gap-1.5">
                 <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

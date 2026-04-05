@@ -38,6 +38,7 @@ Key files:
 - `src/components/movies/` - Movie-related components (MovieGrid, MovieSmallGrid, MovieTable, MovieCard, etc.)
 - `src/pages/` - Page components
 - `src/pages/MoviesPage.tsx` - Main movies page with client-side search filtering and view mode switching
+- `src/utils/exportCsv.ts` - Client-side CSV export helper (same format as import: title,year)
 
 ## Common Tasks
 
