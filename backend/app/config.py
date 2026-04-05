@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     # JWT settings
     algorithm: str = "HS256"
-    access_token_expire_minutes: int = 60 * 24 * 7  # 1 week
+    access_token_expire_minutes: int = 60 * 24 * 365  # 1 year
 
     class Config:
         env_file = ".env"
