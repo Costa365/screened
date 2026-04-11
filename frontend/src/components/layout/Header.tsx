@@ -27,7 +27,7 @@ export function Header() {
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
             <img src="/logo.svg" alt="Screened" className="h-8 w-8" />
-            <span className="text-xl font-bold text-white">Screened</span>
+            <span className="text-2xl font-bold text-white">Screened</span>
           </Link>
 
           {/* Desktop nav */}
