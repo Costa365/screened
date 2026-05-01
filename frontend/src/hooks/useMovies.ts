@@ -6,21 +6,34 @@ export function useMovies() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchMovies = useCallback(async () => {
+  const fetchMovies = useCallback(async ({ silent = false }: { silent?: boolean } = {}) => {
     try {
-      setIsLoading(true);
+      if (!silent) setIsLoading(true);
       const data = await api.getMovies();
       setMovies(data);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load movies');
     } finally {
-      setIsLoading(false);
+      if (!silent) setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
     fetchMovies();
+  }, [fetchMovies]);
+
+  useEffect(() => {
+    const refresh = () => fetchMovies({ silent: true });
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') refresh();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', refresh);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', refresh);
+    };
   }, [fetchMovies]);
 
   const addMovie = async (movie: MovieCreate) => {
