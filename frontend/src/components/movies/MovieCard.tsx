@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Movie } from '../../api/client';
 import { ImdbLink } from './ImdbLink';
+import { WatchedDate } from './WatchedDate';
 
 interface MovieCardProps {
   movie: Movie;
@@ -45,13 +46,14 @@ export function MovieCard({ movie, onEdit, onDelete }: MovieCardProps) {
           {movie.title}
         </h3>
         <p className="text-gray-400 text-sm">{movie.year}</p>
+        <WatchedDate value={movie.watched_on} />
       </div>
 
       <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1">
         <button
           onClick={() => onEdit(movie)}
           className="p-1.5 bg-gray-900/80 hover:bg-gray-900 rounded text-gray-300 hover:text-white"
-          title="Edit TMDB ID"
+          title="Edit movie"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />

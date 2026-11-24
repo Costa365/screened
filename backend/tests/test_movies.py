@@ -18,6 +18,7 @@ def test_create_movie(client, auth_headers):
     assert data["year"] == 1999
     assert data["tmdb_id"] == 603
     assert data["position"] == 1
+    assert data["watched_on"] is None
     assert "id" in data
     assert "added_at" in data
 
@@ -60,6 +61,26 @@ def test_update_movie(client, auth_headers):
 def test_update_movie_not_found(client, auth_headers):
     response = client.patch("/api/movies/99999", json={"title": "New"}, headers=auth_headers)
     assert response.status_code == 404
+
+
+def test_watched_date_lifecycle(client, auth_headers):
+    movie = {"title": "The Matrix", "year": 1999, "tmdb_id": 603, "watched_on": "2024-02-29"}
+    created = client.post("/api/movies", json=movie, headers=auth_headers)
+    assert created.status_code == 201
+    assert created.json()["watched_on"] == "2024-02-29"
+    path = f"/api/movies/{created.json()['id']}"
+
+    renamed = client.patch(path, json={"title": "Updated title"}, headers=auth_headers)
+    assert renamed.json()["watched_on"] == "2024-02-29"
+    invalid = client.patch(path, json={"watched_on": "2023-02-29"}, headers=auth_headers)
+    assert invalid.status_code == 422
+
+    for date in ("2025-06-07", None, "2026-01-01"):
+        updated = client.patch(path, json={"watched_on": date}, headers=auth_headers)
+        assert updated.status_code == 200
+        saved = client.get("/api/movies", headers=auth_headers).json()[0]
+        assert saved["watched_on"] == date
+        assert saved["title"] == "Updated title"
 
 
 def test_delete_movie(client, auth_headers):

@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { api, TMDBMovieResult, MovieCreate } from '../../api/client';
+import { WatchedDateField } from './WatchedDate';
 
 interface AddMovieFormProps {
   onAdd: (movie: MovieCreate) => Promise<unknown>;
@@ -7,9 +8,18 @@ interface AddMovieFormProps {
 
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w92';
 
+function localToday() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
 export function AddMovieForm({ onAdd }: AddMovieFormProps) {
   const [title, setTitle] = useState('');
   const [year, setYear] = useState('');
+  const [selectedDate, setSelectedDate] = useState<string>();
+  const watchedOn = selectedDate ?? localToday();
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState<TMDBMovieResult[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -43,9 +53,11 @@ export function AddMovieForm({ onAdd }: AddMovieFormProps) {
         year: movieYear,
         tmdb_id: movie.id,
         poster_path: movie.poster_path,
+        watched_on: watchedOn || null,
       });
       setTitle('');
       setYear('');
+      setSelectedDate(undefined);
       setSearchResults([]);
       setShowResults(false);
     } catch (err) {
@@ -61,21 +73,28 @@ export function AddMovieForm({ onAdd }: AddMovieFormProps) {
         </svg>
         Log a movie
       </h2>
-      <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
-        <input
-          type="text"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          placeholder="Search for a movie you watched..."
-          className="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-        />
-        <input
-          type="text"
-          value={year}
-          onChange={e => setYear(e.target.value)}
-          placeholder="Year (optional)"
-          className="w-full sm:w-[138px] px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-        />
+      <form onSubmit={handleSearch} className="grid gap-3 md:grid-cols-[minmax(0,1fr)_8rem_12rem_auto] md:items-end">
+        <label className="block text-sm text-gray-300">
+          Movie title
+          <input
+            type="text"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            placeholder="Search for a movie you watched..."
+            className="mt-1 block w-full px-3 py-2 text-base bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+          />
+        </label>
+        <label className="block text-sm text-gray-300">
+          Release year
+          <input
+            type="text"
+            value={year}
+            onChange={e => setYear(e.target.value)}
+            placeholder="Optional"
+            className="mt-1 block w-full px-3 py-2 text-base bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+          />
+        </label>
+        <WatchedDateField id="add-watched-on" value={watchedOn} onChange={setSelectedDate} />
         <button
           type="submit"
           disabled={isSearching || !title.trim()}

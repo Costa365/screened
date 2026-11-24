@@ -1,5 +1,6 @@
 import { Movie } from '../../api/client';
 import { ImdbLink } from './ImdbLink';
+import { WatchedDate } from './WatchedDate';
 
 interface MovieTableProps {
   movies: Movie[];
@@ -43,6 +44,7 @@ export function MovieTable({ movies, onEdit, onDelete }: MovieTableProps) {
                 <ImdbLink movie={movie} className="text-white hover:text-primary-400">
                   {movie.title}
                 </ImdbLink>
+                <WatchedDate value={movie.watched_on} />
               </td>
               <td className="px-4 py-2 text-gray-400 text-sm">{movie.year}</td>
               <td className="px-4 py-2 text-right">

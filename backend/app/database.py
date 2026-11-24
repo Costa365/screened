@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 from app.config import get_settings
@@ -29,7 +29,13 @@ def get_db():
 
 
 def init_db():
-    from app.models.movie import Movie  # noqa: F401
+    from app.models.movie import Movie
     from app.models.user import User  # noqa: F401
 
-    Base.metadata.create_all(bind=engine)
+    with engine.begin() as conn:
+        # Serialize the schema check and upgrade across SQLite workers at startup.
+        conn.exec_driver_sql("BEGIN IMMEDIATE")
+        Base.metadata.create_all(bind=conn)
+        columns = inspect(conn).get_columns(Movie.__tablename__)
+        if not any(column["name"] == "watched_on" for column in columns):
+            conn.exec_driver_sql("ALTER TABLE movies ADD COLUMN watched_on DATE")

@@ -8,6 +8,7 @@ A personal movie logging web app with TMDB integration. Track the movies you've 
 ## Features
 
 - **Movie Logging**: Add movies by title and year, automatically matched with TMDB
+- The watched date defaults to today when logging a movie. You can change or clear it when adding or editing the movie.
 - **Movie links**: Open a film’s IMDb page from its poster or its title in table view. TMDB supplies the posters and metadata.
 - **CSV Import**: Bulk import movies from a CSV file
 - **View Modes**: Large icons, small icons, and table views
@@ -117,11 +118,13 @@ docker run --rm -v $(pwd)/frontend:/app -w /app node:20-slim bash -c "npm instal
 
 ## CSV Import Format
 
+The optional `watched_on` column accepts a date in YYYY-MM-DD format. Leave it blank for an unknown date.
+
 ```csv
-title,year
-The Matrix,1999
-Inception,2010
-Parasite,2019
+title,year,watched_on
+The Matrix,1999,2024-02-29
+Inception,2010,
+Parasite,2019,
 ```
 
 ## License

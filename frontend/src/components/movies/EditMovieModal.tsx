@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { Movie, MovieUpdate, api } from '../../api/client';
+import { WatchedDateField } from './WatchedDate';
 
 interface EditMovieModalProps {
   movie: Movie;
@@ -11,18 +12,23 @@ const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w300';
 
 export function EditMovieModal({ movie, onSave, onClose }: EditMovieModalProps) {
   const [tmdbId, setTmdbId] = useState(movie.tmdb_id.toString());
+  const [watchedOn, setWatchedOn] = useState(movie.watched_on ?? '');
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<{
+    tmdb_id: number;
     title: string;
     year: number;
     poster_path: string | null;
   } | null>(null);
 
+  const dateChanged = watchedOn !== (movie.watched_on ?? '');
+  const canSave = !isSaving && !isLoading && (preview !== null || (dateChanged && tmdbId === String(movie.tmdb_id)));
+
   const handleLookup = async () => {
-    const id = parseInt(tmdbId, 10);
-    if (isNaN(id)) {
+    const id = Number(tmdbId);
+    if (!Number.isInteger(id) || id <= 0) {
       setError('Invalid TMDB ID');
       return;
     }
@@ -34,6 +40,7 @@ export function EditMovieModal({ movie, onSave, onClose }: EditMovieModalProps) 
     try {
       const details = await api.getTMDBMovie(id);
       setPreview({
+        tmdb_id: details.id,
         title: details.title,
         year: details.release_date ? parseInt(details.release_date.substring(0, 4), 10) : movie.year,
         poster_path: details.poster_path,
@@ -47,18 +54,15 @@ export function EditMovieModal({ movie, onSave, onClose }: EditMovieModalProps) 
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!preview) return;
+    if (!canSave) return;
 
     setIsSaving(true);
     setError(null);
 
     try {
-      await onSave({
-        tmdb_id: parseInt(tmdbId, 10),
-        title: preview.title,
-        year: preview.year,
-        poster_path: preview.poster_path,
-      });
+      const update: MovieUpdate = { ...preview };
+      if (dateChanged) update.watched_on = watchedOn || null;
+      await onSave(update);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to save');
       setIsSaving(false);
@@ -74,21 +78,27 @@ export function EditMovieModal({ movie, onSave, onClose }: EditMovieModalProps) 
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <WatchedDateField id="edit-watched-on" value={watchedOn} onChange={setWatchedOn} />
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
+            <label htmlFor="edit-tmdb-id" className="block text-sm font-medium text-gray-300 mb-1">
               TMDB ID
             </label>
             <div className="flex gap-2">
               <input
+                id="edit-tmdb-id"
                 type="text"
                 value={tmdbId}
-                onChange={e => setTmdbId(e.target.value)}
-                className="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                disabled={isLoading || isSaving}
+                onChange={e => {
+                  setTmdbId(e.target.value);
+                  setPreview(null);
+                }}
+                className="min-w-0 flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
               <button
                 type="button"
                 onClick={handleLookup}
-                disabled={isLoading}
+                disabled={isLoading || isSaving}
                 className="px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md"
               >
                 {isLoading ? '...' : 'Lookup'}
@@ -130,7 +140,7 @@ export function EditMovieModal({ movie, onSave, onClose }: EditMovieModalProps) 
             </button>
             <button
               type="submit"
-              disabled={!preview || isSaving}
+              disabled={!canSave}
               className="px-4 py-2 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-md"
             >
               {isSaving ? 'Saving...' : 'Save'}

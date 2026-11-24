@@ -38,7 +38,7 @@ Key files:
 - `src/components/movies/` - Movie-related components (MovieGrid, MovieSmallGrid, MovieTable, MovieCard, etc.)
 - `src/pages/` - Page components
 - `src/pages/MoviesPage.tsx` - Main movies page with client-side search filtering and view mode switching
-- `src/utils/exportCsv.ts` - Client-side CSV export helper (same format as import: title,year)
+- `src/utils/exportCsv.ts` - CSV export helper for title, year, and optional watched_on
 
 ## Common Tasks
 
@@ -65,7 +65,7 @@ cd backend && pytest -v
 ### Database changes
 - Modify model in `backend/app/models/movie.py`
 - Database is auto-created on startup via `init_db()` in main.py
-- For schema changes, delete `data/screened.db` to recreate (loses data)
+- `init_db()` upgrades existing SQLite databases in place. Older movies start with a null `watched_on` date.
 
 ## Environment Variables
 

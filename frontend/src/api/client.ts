@@ -131,6 +131,7 @@ export interface Movie {
   tmdb_id: number;
   poster_path: string | null;
   position: number;
+  watched_on: string | null;
   added_at: string;
 }
 
@@ -139,6 +140,7 @@ export interface MovieCreate {
   year: number;
   tmdb_id: number;
   poster_path: string | null;
+  watched_on?: string | null;
 }
 
 export interface MovieUpdate {
@@ -146,6 +148,7 @@ export interface MovieUpdate {
   title?: string;
   year?: number;
   poster_path?: string | null;
+  watched_on?: string | null;
 }
 
 export interface TMDBMovieResult {

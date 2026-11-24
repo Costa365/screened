@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 from pydantic import BaseModel
 
@@ -8,6 +8,7 @@ class MovieBase(BaseModel):
     year: int
     tmdb_id: int
     poster_path: str | None = None
+    watched_on: date | None = None
 
 
 class MovieCreate(MovieBase):
@@ -19,6 +20,7 @@ class MovieUpdate(BaseModel):
     title: str | None = None
     year: int | None = None
     poster_path: str | None = None
+    watched_on: date | None = None
 
 
 class Movie(MovieBase):

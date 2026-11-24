@@ -40,6 +40,7 @@ def create_movie(
         year=movie.year,
         tmdb_id=movie.tmdb_id,
         poster_path=movie.poster_path,
+        watched_on=movie.watched_on,
         position=next_position,
         user_id=current_user.id,
     )

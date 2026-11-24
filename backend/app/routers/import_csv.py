@@ -35,7 +35,10 @@ async def import_csv(
     except UnicodeDecodeError:
         text_content = content.decode("latin-1")
 
-    rows = parse_csv(text_content)
+    try:
+        rows = parse_csv(text_content)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     imported = 0
     skipped = 0
@@ -80,6 +83,7 @@ async def import_csv(
                 year=int(tmdb_movie.release_date[:4]) if tmdb_movie.release_date else row.year,
                 tmdb_id=tmdb_movie.id,
                 poster_path=tmdb_movie.poster_path,
+                watched_on=row.watched_on,
                 position=next_position,
                 user_id=current_user.id,
             )

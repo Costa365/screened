@@ -1,5 +1,6 @@
 import { Movie } from '../../api/client';
 import { ImdbLink } from './ImdbLink';
+import { WatchedDate } from './WatchedDate';
 
 interface MovieSmallGridProps {
   movies: Movie[];
@@ -31,6 +32,7 @@ export function MovieSmallGrid({ movies, onEdit, onDelete }: MovieSmallGridProps
             {movie.title}
           </p>
           <p className="text-xs text-gray-500">{movie.year}</p>
+          <WatchedDate value={movie.watched_on} />
 
           <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-0.5">
             <button

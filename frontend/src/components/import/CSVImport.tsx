@@ -42,16 +42,16 @@ export function CSVImport({ onComplete }: CSVImportProps) {
       <p className="text-gray-400 mb-4">
         Upload a CSV file with <code className="bg-gray-700 px-1 rounded">title</code> and{' '}
         <code className="bg-gray-700 px-1 rounded">year</code> columns.
-        Movies will be automatically matched with TMDB.
+        Optionally include <code className="bg-gray-700 px-1 rounded">watched_on</code> in YYYY-MM-DD format.
       </p>
 
       <div className="mb-4 p-4 bg-gray-700 rounded-md">
         <p className="text-sm text-gray-300 mb-2">Example CSV format:</p>
         <pre className="text-xs text-gray-400 font-mono">
-{`title,year
-The Matrix,1999
-Inception,2010
-Parasite,2019`}
+{`title,year,watched_on
+The Matrix,1999,2024-02-29
+Inception,2010,
+Parasite,2019,`}
         </pre>
       </div>
 
