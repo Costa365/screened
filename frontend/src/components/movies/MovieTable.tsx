@@ -1,4 +1,5 @@
 import { Movie } from '../../api/client';
+import { ImdbLink } from './ImdbLink';
 
 interface MovieTableProps {
   movies: Movie[];
@@ -24,11 +25,7 @@ export function MovieTable({ movies, onEdit, onDelete }: MovieTableProps) {
           {movies.map(movie => (
             <tr key={movie.id} className="border-b border-gray-700/50 hover:bg-gray-700/30">
               <td className="px-4 py-1">
-                <a
-                  href={`https://www.themoviedb.org/movie/${movie.tmdb_id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <ImdbLink movie={movie}>
                   {movie.poster_path ? (
                     <img
                       src={`${TMDB_IMAGE_BASE}${movie.poster_path}`}
@@ -40,17 +37,12 @@ export function MovieTable({ movies, onEdit, onDelete }: MovieTableProps) {
                       <span className="text-gray-500 text-xs">?</span>
                     </div>
                   )}
-                </a>
+                </ImdbLink>
               </td>
               <td className="px-4 py-2">
-                <a
-                  href={`https://www.themoviedb.org/movie/${movie.tmdb_id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white hover:text-primary-400"
-                >
+                <ImdbLink movie={movie} className="text-white hover:text-primary-400">
                   {movie.title}
-                </a>
+                </ImdbLink>
               </td>
               <td className="px-4 py-2 text-gray-400 text-sm">{movie.year}</td>
               <td className="px-4 py-2 text-right">

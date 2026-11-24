@@ -49,6 +49,7 @@ async def get_movie_details(tmdb_id: int) -> TMDBMovieDetails:
 
         return TMDBMovieDetails(
             id=data["id"],
+            imdb_id=data.get("imdb_id"),
             title=data["title"],
             release_date=data.get("release_date"),
             poster_path=data.get("poster_path"),

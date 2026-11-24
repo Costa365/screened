@@ -163,6 +163,7 @@ export interface TMDBSearchResponse {
 
 export interface TMDBMovieDetails {
   id: number;
+  imdb_id: string | null;
   title: string;
   release_date: string | null;
   poster_path: string | null;

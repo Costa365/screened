@@ -4,6 +4,7 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { MoviesPage } from './pages/MoviesPage';
 import { ImportPage } from './pages/ImportPage';
+import { ImdbPage } from './pages/ImdbPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
@@ -36,6 +37,7 @@ export default function App() {
 
   return (
     <Routes>
+      <Route path="/imdb/:tmdbId" element={<ImdbPage />} />
       <Route
         path="/login"
         element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />}

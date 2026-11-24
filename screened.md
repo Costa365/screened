@@ -15,7 +15,7 @@ Web app entitled Screened, for logging the movies that the user has watched.
 - It should be fully responsive, so I can run it on desktop and mobile
 - Create a nice logo and appropriate favicons
 - It should be possible to edit the TMDB id of the film in case the wrong movie is detected
-- Show the watched films in a suitable format with the movie thumbnail, which can be obtained from TMDB. Clicking on the thumbnail should take the user to the film's page in TMDB
+- Show the watched films in a suitable format with the movie thumbnail, which can be obtained from TMDB. Clicking on the thumbnail should take the user to the film's page on IMDb
 
 ## Technical
 - Include docker and docker compose files

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Movie } from '../../api/client';
+import { ImdbLink } from './ImdbLink';
 
 interface MovieCardProps {
   movie: Movie;
@@ -25,12 +26,7 @@ export function MovieCard({ movie, onEdit, onDelete }: MovieCardProps) {
 
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden group relative">
-      <a
-        href={`https://www.themoviedb.org/movie/${movie.tmdb_id}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block"
-      >
+      <ImdbLink movie={movie} className="block">
         {movie.poster_path ? (
           <img
             src={`${TMDB_IMAGE_BASE}${movie.poster_path}`}
@@ -42,7 +38,7 @@ export function MovieCard({ movie, onEdit, onDelete }: MovieCardProps) {
             <span className="text-gray-500 text-4xl">?</span>
           </div>
         )}
-      </a>
+      </ImdbLink>
 
       <div className="p-3">
         <h3 className="font-medium text-white truncate" title={movie.title}>

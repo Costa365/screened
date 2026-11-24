@@ -17,6 +17,7 @@ class TMDBSearchResponse(BaseModel):
 
 class TMDBMovieDetails(BaseModel):
     id: int
+    imdb_id: str | None = None
     title: str
     release_date: str | None = None
     poster_path: str | None = None

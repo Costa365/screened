@@ -8,7 +8,7 @@ A personal movie logging web app with TMDB integration. Track the movies you've 
 ## Features
 
 - **Movie Logging**: Add movies by title and year, automatically matched with TMDB
-- **TMDB Integration**: Posters, metadata, and links to TMDB pages
+- **Movie links**: Open a film’s IMDb page from its poster or its title in table view. TMDB supplies the posters and metadata.
 - **CSV Import**: Bulk import movies from a CSV file
 - **View Modes**: Large icons, small icons, and table views
 - **Edit Support**: Correct TMDB matches by updating the TMDB ID

@@ -1,4 +1,5 @@
 import { Movie } from '../../api/client';
+import { ImdbLink } from './ImdbLink';
 
 interface MovieSmallGridProps {
   movies: Movie[];
@@ -13,12 +14,7 @@ export function MovieSmallGrid({ movies, onEdit, onDelete }: MovieSmallGridProps
     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
       {movies.map(movie => (
         <div key={movie.id} className="group relative">
-          <a
-            href={`https://www.themoviedb.org/movie/${movie.tmdb_id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-          >
+          <ImdbLink movie={movie} className="block">
             {movie.poster_path ? (
               <img
                 src={`${TMDB_IMAGE_BASE}${movie.poster_path}`}
@@ -30,7 +26,7 @@ export function MovieSmallGrid({ movies, onEdit, onDelete }: MovieSmallGridProps
                 <span className="text-gray-500 text-2xl">?</span>
               </div>
             )}
-          </a>
+          </ImdbLink>
           <p className="text-xs text-gray-300 truncate mt-1" title={movie.title}>
             {movie.title}
           </p>
