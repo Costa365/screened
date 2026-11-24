@@ -90,7 +90,7 @@ export function AddMovieForm({ onAdd }: AddMovieFormProps) {
             type="text"
             value={year}
             onChange={e => setYear(e.target.value)}
-            placeholder="Optional"
+            placeholder="Any year"
             className="mt-1 block w-full px-3 py-2 text-base bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
         </label>

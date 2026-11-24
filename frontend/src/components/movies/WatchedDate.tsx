@@ -24,7 +24,7 @@ export function WatchedDateField({ id, value, onChange }: WatchedDateFieldProps)
   return (
     <div>
       <div className="flex items-baseline justify-between gap-2 mb-1">
-        <label htmlFor={id} className="text-sm text-gray-300">Watched on (optional)</label>
+        <label htmlFor={id} className="text-sm text-gray-300">Watched on</label>
         {value && (
           <button type="button" onClick={() => onChange('')} className="text-xs text-primary-400 hover:underline">
             Clear
